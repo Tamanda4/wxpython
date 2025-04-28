@@ -32,7 +32,7 @@ class StudentManagementSystem:
         except sqlite3.Error as e:
             messagebox.showerror("Database Error", f"Error creating table: {str(e)}")
 
-    """def create_widgets(self):
+    def create_widgets(self):
         form_frame = tk.LabelFrame(self.root, text="Student Form", padx=10, pady=10)
         form_frame.pack(fill="x", padx=10, pady=5)
 
@@ -117,8 +117,11 @@ class StudentManagementSystem:
             return
 
         try:
-            self.cursor.execute(
-             (self.name_entry.get().strip(),
+            self.cursor.execute("""
+                UPDATE students 
+                SET name=?, course=?, grade=? 
+                WHERE id=?
+            """, (self.name_entry.get().strip(),
                   self.course_entry.get().strip(),
                   self.grade_entry.get().strip() or None,
                   int(self.id_entry.get())))
@@ -145,7 +148,7 @@ class StudentManagementSystem:
                 self.clear_form()
             except sqlite3.Error as e:
                 messagebox.showerror("Database Error", f"Error deleting student: {str(e)}")
-# hhhh
+
     def view_students(self):
         try:
             self.tree.delete(*self.tree.get_children())
@@ -179,4 +182,4 @@ class StudentManagementSystem:
 if __name__ == "__main__":
     root = tk.Tk()
     app = StudentManagementSystem(root)
-    root.mainloop()"""
+    root.mainloop()
