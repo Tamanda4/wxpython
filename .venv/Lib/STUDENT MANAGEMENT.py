@@ -9,12 +9,12 @@ class StudentManagementSystem:
         self.root.title("Student Management System")
         self.root.geometry("800x600")
 
-
+        # Database setup
         self.conn = sqlite3.connect("student_database.db")
         self.cursor = self.conn.cursor()
         self.create_table()
 
-
+        # GUI Components
         self.create_widgets()
         self.view_students()
 
