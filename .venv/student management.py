@@ -51,3 +51,12 @@ class StudentManagementSystem:
         self.grade_entry = tk.Entry(form_frame)
         self.grade_entry.grid(row=3, column=1, pady=5, padx=5, sticky="ew")
 
+        btn_frame = tk.Frame(form_frame)
+        btn_frame.grid(row=4, column=0, columnspan=2, pady=10)
+
+        tk.Button(btn_frame, text="Add", command=self.add_student).pack(side="left", padx=5)
+        tk.Button(btn_frame, text="Update", command=self.update_student).pack(side="left", padx=5)
+        tk.Button(btn_frame, text="Delete", command=self.delete_student).pack(side="left", padx=5)
+        tk.Button(btn_frame, text="Clear", command=self.clear_form).pack(side="left", padx=5)
+
+
