@@ -66,3 +66,9 @@ class StudentManagementSystem:
         for col in ("ID", "Name", "Course", "Grade"):
             self.tree.heading(col, text=col)
             self.tree.column(col, width=100, anchor="center")
+            scrollbar = ttk.Scrollbar(tree_frame, orient="vertical", command=self.tree.yview)
+            self.tree.configure(yscrollcommand=scrollbar.set)
+
+            self.tree.pack(side="left", fill="both", expand=True)
+            scrollbar.pack(side="right", fill="y")
+
