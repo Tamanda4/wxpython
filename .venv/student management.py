@@ -59,4 +59,10 @@ class StudentManagementSystem:
         tk.Button(btn_frame, text="Delete", command=self.delete_student).pack(side="left", padx=5)
         tk.Button(btn_frame, text="Clear", command=self.clear_form).pack(side="left", padx=5)
 
+        tree_frame = tk.Frame(self.root)
+        tree_frame.pack(fill="both", expand=True, padx=10, pady=5)
 
+        self.tree = ttk.Treeview(tree_frame, columns=("ID", "Name", "Course", "Grade"), show="headings")
+        for col in ("ID", "Name", "Course", "Grade"):
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=100, anchor="center")
