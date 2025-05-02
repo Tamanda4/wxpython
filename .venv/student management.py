@@ -71,4 +71,5 @@ class StudentManagementSystem:
 
             self.tree.pack(side="left", fill="both", expand=True)
             scrollbar.pack(side="right", fill="y")
+            self.tree.bind("<ButtonRelease-1>", self.load_selected_student)
 
