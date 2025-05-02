@@ -72,4 +72,16 @@ class StudentManagementSystem:
             self.tree.pack(side="left", fill="both", expand=True)
             scrollbar.pack(side="right", fill="y")
             self.tree.bind("<ButtonRelease-1>", self.load_selected_student)
+    def validate_inputs(self):
+        if not self.id_entry.get().isdigit():
+            messagebox.showerror("Error", "ID must be a number!")
+            return False
+        if not self.name_entry.get().strip():
+            messagebox.showerror("Error", "Name is required!")
+            return False
+        if not self.course_entry.get().strip():
+            messagebox.showerror("Error", "Course is required!")
+            return False
+        return True
+
 
