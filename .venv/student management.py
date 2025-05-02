@@ -18,6 +18,7 @@ class StudentManagementSystem:
         self.create_widgets()
         self.view_students()
 
+
     def create_table(self):
         try:
             self.cursor.execute('''
@@ -31,6 +32,8 @@ class StudentManagementSystem:
             self.conn.commit()
         except sqlite3.Error as e:
             messagebox.showerror("Database Error", f"Error creating table: {str(e)}")
+
+
     def create_widgets(self):
         form_frame = tk.LabelFrame(self.root, text="Student Form", padx=10, pady=10)
         form_frame.pack(fill="x", padx=10, pady=5)
@@ -72,6 +75,8 @@ class StudentManagementSystem:
             self.tree.pack(side="left", fill="both", expand=True)
             scrollbar.pack(side="right", fill="y")
             self.tree.bind("<ButtonRelease-1>", self.load_selected_student)
+
+
     def validate_inputs(self):
         if not self.id_entry.get().isdigit():
             messagebox.showerror("Error", "ID must be a number!")
@@ -83,5 +88,26 @@ class StudentManagementSystem:
             messagebox.showerror("Error", "Course is required!")
             return False
         return True
+
+
+    def add_student(self):
+        if not self.validate_inputs():
+            return
+
+        try:
+            self.cursor.execute("INSERT INTO students VALUES (?, ?, ?, ?)",
+                                (int(self.id_entry.get()),
+                                 self.name_entry.get().strip(),
+                                 self.course_entry.get().strip(),
+                                 self.grade_entry.get().strip() or None))
+            self.conn.commit()
+            messagebox.showinfo("Success", "Student added successfully!")
+            self.view_students()
+            self.clear_form()
+        except sqlite3.IntegrityError:
+            messagebox.showerror("Error", "Student ID already exists!")
+        except sqlite3.Error as e:
+            messagebox.showerror("Database Error", f"Error adding student: {str(e)}")
+
 
 
