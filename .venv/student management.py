@@ -132,5 +132,25 @@ class StudentManagementSystem:
             messagebox.showerror("Database Error", f"Error updating student: {str(e)}")
 
 
+    def delete_student(self):
+        selected = self.tree.focus()
+        if not selected:
+            messagebox.showerror("Error", "No student selected!")
+            return
+
+        student_id = self.tree.item(selected)["values"][0]
+
+        if messagebox.askyesno("Confirm", "Are you sure you want to delete this student?"):
+            try:
+                self.cursor.execute("DELETE FROM students WHERE id=?", (student_id,))
+                self.conn.commit()
+                messagebox.showinfo("Success", "Student deleted successfully!")
+                self.view_students()
+                self.clear_form()
+            except sqlite3.Error as e:
+                messagebox.showerror("Database Error", f"Error deleting student: {str(e)}")
+
+
+
 
 
