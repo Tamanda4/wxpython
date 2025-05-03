@@ -151,6 +151,17 @@ class StudentManagementSystem:
                 messagebox.showerror("Database Error", f"Error deleting student: {str(e)}")
 
 
+    def view_students(self):
+        try:
+            self.tree.delete(*self.tree.get_children())
+            self.cursor.execute("SELECT * FROM students ORDER BY id")
+            for row in self.cursor.fetchall():
+                self.tree.insert("", "end", values=row)
+        except sqlite3.Error as e:
+            messagebox.showerror("Database Error", f"Error loading students: {str(e)}")
+
+
+
 
 
 
