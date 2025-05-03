@@ -110,4 +110,27 @@ class StudentManagementSystem:
             messagebox.showerror("Database Error", f"Error adding student: {str(e)}")
 
 
+    def update_student(self):
+        selected = self.tree.focus()
+        if not selected:
+            messagebox.showerror("Error", "No student selected!")
+            return
+
+        if not self.validate_inputs():
+            return
+
+        try:
+            self.cursor.execute(
+                (self.name_entry.get().strip(),
+                 self.course_entry.get().strip(),
+                 self.grade_entry.get().strip() or None,
+                 int(self.id_entry.get())))
+            self.conn.commit()
+            messagebox.showinfo("Success", "Student updated successfully!")
+            self.view_students()
+        except sqlite3.Error as e:
+            messagebox.showerror("Database Error", f"Error updating student: {str(e)}")
+
+
+
 
