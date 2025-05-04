@@ -177,6 +177,12 @@ class StudentManagementSystem:
         self.grade_entry.delete(0, tk.END)
 
 
+    def __del__(self):
+        if hasattr(self, 'conn'):
+            self.conn.close()
+
+
+
 
 
 
