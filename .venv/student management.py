@@ -181,6 +181,12 @@ class StudentManagementSystem:
         if hasattr(self, 'conn'):
             self.conn.close()
 
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = StudentManagementSystem(root)
+    root.mainloop()
+
+
 
 
 
