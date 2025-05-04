@@ -170,6 +170,13 @@ class StudentManagementSystem:
             self.course_entry.insert(0, student[2])
             self.grade_entry.insert(0, student[3] if student[3] else "")
 
+    def clear_form(self):
+        self.id_entry.delete(0, tk.END)
+        self.name_entry.delete(0, tk.END)
+        self.course_entry.delete(0, tk.END)
+        self.grade_entry.delete(0, tk.END)
+
+
 
 
 
