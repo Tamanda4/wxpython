@@ -160,6 +160,17 @@ class StudentManagementSystem:
         except sqlite3.Error as e:
             messagebox.showerror("Database Error", f"Error loading students: {str(e)}")
 
+    def load_selected_student(self, event):
+        selected = self.tree.focus()
+        if selected:
+            student = self.tree.item(selected)["values"]
+            self.clear_form()
+            self.id_entry.insert(0, student[0])
+            self.name_entry.insert(0, student[1])
+            self.course_entry.insert(0, student[2])
+            self.grade_entry.insert(0, student[3] if student[3] else "")
+
+
 
 
 
