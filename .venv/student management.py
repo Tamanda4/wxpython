@@ -62,6 +62,15 @@ class StudentManagementSystem:
         tk.Button(btn_frame, text="Delete", command=self.delete_student).pack(side="left", padx=5)
         tk.Button(btn_frame, text="Clear", command=self.clear_form).pack(side="left", padx=5)
 
+        search_frame = tk.Frame(self.root)
+        search_frame.pack(fill="x", padx=10, pady=5)
+
+        tk.Label(search_frame, text="Search:").pack(side="left")
+        self.search_entry = tk.Entry(search_frame)
+        self.search_entry.pack(side="left", padx=5, fill="x", expand=True)
+        tk.Button(search_frame, text="Search", command=self.search_students).pack(side="left", padx=5)
+        tk.Button(search_frame, text="Show All", command=self.view_students).pack(side="left", padx=5)
+
         tree_frame = tk.Frame(self.root)
         tree_frame.pack(fill="both", expand=True, padx=10, pady=5)
 
@@ -132,6 +141,26 @@ class StudentManagementSystem:
             messagebox.showerror("Database Error", f"Error updating student: {str(e)}")
 
 
+    def search_students(self):
+        """Search for students based on the search query"""
+        query = self.search_entry.get().strip()
+        if not query:
+            self.view_students()
+            return
+
+        try:
+            self.tree.delete(*self.tree.get_children())
+            self.cursor.execute("""
+                SELECT * FROM students 
+                WHERE CAST(id AS TEXT) LIKE ? OR name LIKE ? OR course LIKE ?
+            """, (f"%{query}%", f"%{query}%", f"%{query}%"))
+            for row in self.cursor.fetchall():
+                self.tree.insert("", "end", values=row)
+        except sqlite3.Error as e:
+            messagebox.showerror("Database Error", f"Error searching students: {str(e)}")
+
+
+
     def delete_student(self):
         selected = self.tree.focus()
         if not selected:
@@ -149,6 +178,8 @@ class StudentManagementSystem:
                 self.clear_form()
             except sqlite3.Error as e:
                 messagebox.showerror("Database Error", f"Error deleting student: {str(e)}")
+
+
 
 
     def view_students(self):
