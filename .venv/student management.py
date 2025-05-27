@@ -7,7 +7,7 @@ class StudentManagementSystem:
     def __init__(self, root):
         self.root = root
         self.root.title("Student Management System")
-        self.root.geometry("800x600")
+        self.root.geometry("1900x1080")
 
 
         self.conn = sqlite3.connect("student_database.db")
